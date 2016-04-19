@@ -22,7 +22,7 @@ echo -e "\e[00;31m#########################################################\e[00
 }
 while getopts "h:k:r:e:t" option; do
  case "${option}" in
-	  r) report=${OPTARG}"-"`date +"%d-%m-%y"`;;
+	  r) report=${OPTARG}"_"`date +"%d-%m-%y"`;;
 	  e) export=${OPTARG};;
 	  h) usage; exit;;
 	  *) usage; exit;;
@@ -208,23 +208,14 @@ else
   :
 fi
 
-#looks for files we can write to that don't belong to us
-grfilesall=`find / -writable -not -user \`whoami\` -type f -not -path "/proc/*" -exec ls -al {} \; 2>/dev/null`
-if [ "$grfilesall" ]; then
-echo -e "\e[00;31mFiles not owned by user but writable by group:\e[00m\n$grfilesall" |tee -a $report 2>/dev/null
-echo -e "\n" |tee -a $report 2>/dev/null
-else
-:
-fi
-
 #looks for world-reabable files within /home - depending on number of /home dirs & files, this can take some time so is only 'activated' with thorough scanning switch
-wrfileshm=`find /home/ -perm -4 -type f -exec ls -al {} \; 2>/dev/null`
-if [ "$wrfileshm" ]; then
-	echo -e "\e[00;31mWorld-readable files within /home:\e[00m\n$wrfileshm" |tee -a $report 2>/dev/null
-	echo -e "\n" |tee -a $report 2>/dev/null
-else 
-	:
-fi
+#wrfileshm=`find /home/ -perm -4 -type f -exec ls -al {} \; 2>/dev/null`
+#if [ "$wrfileshm" ]; then
+#	echo -e "\e[00;31mWorld-readable files within /home:\e[00m\n$wrfileshm" |tee -a $report 2>/dev/null
+#	echo -e "\n" |tee -a $report 2>/dev/null
+#else 
+#	:
+#fi
 
 #checks for if various ssh files are accessible - this can take some time so is only 'activated' with thorough scanning switch
 sshfiles=`find / -name "id_dsa*" -o -name "id_rsa*" -o -name "known_hosts" -o -name "authorized_hosts" -o -name "authorized_keys" 2>/dev/null |xargs -r ls`
