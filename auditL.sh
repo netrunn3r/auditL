@@ -3,37 +3,12 @@
 v="version 0.6"
 #@oshearing
 
-#help function
-usage () 
-{ 
-echo -e "\n\e[00;31m#########################################################\e[00m" 
-echo -e "\e[00;31m#\e[00m" "\e[00;33mLocal Audit Linux Script\e[00m" "\e[00;31m#\e[00m"
-echo -e "\e[00;31m#########################################################\e[00m"
-echo -e "\e[00;33m# $v\e[00m\n"
-echo -e "\e[00;33m# Example: ./auditL.sh -r report \e[00m\n"
-
-		echo "OPTIONS:"
-		echo "-r	Enter report name" 
-		echo "-h	Displays this help text"
-		echo -e "\n"
-		echo "Running with no options = limited scans/no output file"
-		
-echo -e "\e[00;31m#########################################################\e[00m"		
-}
-while getopts "h:k:r:e:t" option; do
- case "${option}" in
-	  r) report=${OPTARG}"_"`date +"%d-%m-%y"`;;
-	  e) export=${OPTARG};;
-	  h) usage; exit;;
-	  *) usage; exit;;
- esac
-done
+report=`hostname`"_"`date +"%d-%m-%y"`
 
 echo -e "\n\e[00;31m#########################################################\e[00m"  |tee -a $report 2>/dev/null
 echo -e "\e[00;31m#\e[00m" "\e[00;33mLocal Audit Linux Script\e[00m" "\e[00;31m#\e[00m" |tee -a $report 2>/dev/null
 echo -e "\e[00;31m#########################################################\e[00m" |tee -a $report 2>/dev/null
 echo -e "\e[00;33m# $v\e[00m\n" |tee -a $report 2>/dev/null
-echo -e "\e[00;33m# Example: ./auditL.sh -r report \e[00m\n" |tee -a $report 2>/dev/null
 
 if [ "$report" ]; then 
 	echo "report name = $report" |tee -a $report 2>/dev/null
