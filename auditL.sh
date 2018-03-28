@@ -133,9 +133,9 @@ fi
  
 #locate custom user accounts with some 'known default' uids
 #readpasswd=`grep -v "^#" /etc/passwd | awk -F: '$3 == 0 || $3 == 500 || $3 == 501 || $3 == 502 || $3 == 1000 || $3 == 1001 || $3 == 1002 || $3 == 2000 || $3 == 2001 || $3 == 2002 { print }'`
-readpasswd=`grep -v "^#" /etc/passwd | awk -F: '$3 == 0 || $3 ~ /50[0-9]/ || $3 ~ /100[0-9]/ || $3 ~ /200[0-9]/ { print }'`
+readpasswd=`grep -v "^#" /etc/passwd | awk -F: '$3 == 0 || $3 ~ /5[0-9][0-9]/ || $3 ~ /10[0-9][0-9]/ || $3 ~ /20[0-9][0-9]/ { print }'`
 if [ "$readpasswd" ]; then
-  echo -e "\e[00;31mSample entires from /etc/passwd (searching for uid values 0, 50?, 100?, 200?):\e[00m\n$readpasswd" |tee -a $report 2>/dev/null
+  echo -e "\e[00;31mSample entires from /etc/passwd (searching for uid values 0, 50?, 10??, 20??):\e[00m\n$readpasswd" |tee -a $report 2>/dev/null
   echo -e "\n" |tee -a $report 2>/dev/null
 else 
   :
